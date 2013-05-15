@@ -1,0 +1,55 @@
+This is a NodeJS AngularJs POC.
+
+1. NodeJS
+NodeJS server is nothing but a Json API(REST), listens on the port 3001.
+Server has following folder structure.
+
+lib/
+routes/
+test/
+views/
+app.js
+router.js
+start.js
+Makefile
+package.json
+
+1. Start.js
+
+This is a config script to start and configure node application. We have saparated out config from start file. Also we have maintained routers logic in the router.js file so that
+it is now easily maintainable.
+
+2.app.js
+
+This is a NodeJs/ExpressJS Application configuration file. It configures app with fllowing parameters:
+    a. Static Directory Path
+    b. Server PORT
+    c. Logger
+    d. router
+    e. Post request body parser
+    f. ErrorHandler
+    g. Server
+
+3. router.js
+
+Every server request is routed through this class. This handles various server requests. For now it handles three requests.
+
+ 1. Login (url='/api/login')
+ 2. TreeStructure (url='/api/treeStruct')
+ 3. DirectoryToJson (url='/api/getDirectory')
+
+ Responsibility of router is to route request listened by server to various routes. In here...
+
+ '/api/login','/api/treeStruct/','/api/getDirectory' requests are handled by DirectoryRouter.
+
+ 4. Routes
+    -ApiRouter.js
+        This is a router to handle all api requests. This again calls desired service to compute response.
+
+ 5. lib/Services
+    -DirectoryToJson.js
+        This service creates Json object of given directory using Directory model.
+
+ 6. Tests
+    This contains all the BDD and TDD tests. Mocha (Unit testing Framework for NodeJS is configured to run the tests)
+

@@ -1,0 +1,35 @@
+{
+    "name": "Pub2.0",
+    "version": "0.0.1-1",
+    "description": "Pub2.0s",
+    "keywords": [],
+    "homepage": "http://angularjs.org/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/amarpotghan/pub2.0.git"
+    },
+    "author": "Pub2.0 Team",
+    "contributors": [
+        "Amar Potghan <amar@inbetween.co.in",
+        "Prateek <Prateek@inbetween.co.in",
+        "Rohan  <Rohan@inbetween.co.in"
+    ],
+    "main": "/app.js",
+    "scripts": {
+        "test": "make test",
+        "start": "node start.js"
+    },
+    "dependencies": {
+        "express": "*",
+        "csv": "*",
+        "open": "*",
+        "testacular": "canary",
+        "chai": "*",
+        "mocha": "*"
+    },
+    "engines": {
+        "node": "v0.8.x"
+    },
+    "license": "MIT",
+    "subdomain": "publicationmanager"
+}
