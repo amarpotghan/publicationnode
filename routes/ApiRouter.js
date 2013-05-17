@@ -11,8 +11,8 @@ exports.confirmlogin = function(req, res){
 exports.getFileData= function(req, res){
     fileReader=new Object();
     fileReader=new fileReaderService.FileReaderService();
-    contents = fileReader.readFile();
-    res.send(contents);
+    contents = fileReader.readFile(req.param('path'));
+    res.send([{text: contents}]);
 
 
 };

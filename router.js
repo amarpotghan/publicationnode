@@ -18,7 +18,7 @@ Router.prototype.getRoutes=function(app){
 
 app.get('/api/tree', api.treeStruct);
 app.get('/api/login',api.confirmlogin);
-app.get('/api/getFileData',api.getFileData);
+app.get('/api/getFileData:path',api.getFileData);
 app.get('/api/getDirectory',api.getDirectoryStructure);
 return app;
 
