@@ -1,6 +1,9 @@
-directoryService = require('../lib/services/DirectoryToJson.js');
+var directoryService = require('../lib/services/DirectoryToJson.js');
 fileReaderService = require('../lib/services/FileReaderService.js');
-
+ http = require('http'),
+    fileSystem = require('fs'),
+    path = require('path')
+util = require('util');
 
 exports.confirmlogin = function(req, res){
 
@@ -13,7 +16,11 @@ exports.getFileData= function(req, res){
     fileReader=new fileReaderService.FileReaderService();
     contents = fileReader.readFile(req.param('path'));
     res.send([{text: contents}]);
-
+    console.log('In getFileData');
+  /*  var readStream = fileSystem.createReadStream(req.param('path'));
+    // We replaced all the event handlers with a simple call to util.pump()
+    util.pump(readStream, res);
+    */
 
 };
 
