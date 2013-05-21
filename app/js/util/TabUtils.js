@@ -1,7 +1,8 @@
-var Tab = function (length, panes, data) {
+var Tab = function (length, panes, data,fileContent) {
     this.length = length;
     this.panes = panes;
     this.data = data;
+    this.fileContent=fileContent;
 };
 
 
@@ -25,7 +26,7 @@ Tab.prototype.addTab = function(){
         else{
             var pane = new Object();
             pane.title = this.data.name;
-            pane.content= this.data.fileContent[0].text;
+            pane.content= this.fileContent[0].text;
             pane.path = this.data.path;
             pane.active = true;
             // var pane = {title:"New Tab", content:"New content"};

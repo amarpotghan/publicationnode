@@ -1,7 +1,7 @@
 <script type="text/ng-template"  id="tree_item_renderer.html">
     <label  ng-click="addTab(data)">{{data.name}}</label>
     <ul id="childList" ui:sortable ng:model="data.children">
-        <li ng-repeat="data in data.children" ng-show="childVisible" ng-include="'tree_item_renderer.html'"></li>
+        <li ng-repeat="data in data.children" ng-include="'tree_item_renderer.html'"></li>
     </ul>
 
 
@@ -20,7 +20,10 @@
                     expand-icon="http://cfile23.uf.tistory.com/image/205B973A50C13F4B19D9BD"
                     collapse-icon="http://cfile23.uf.tistory.com/image/1459193A50C13F4B1B05FB"
                     child-icon="http://cfile23.uf.tistory.com/image/165B663A50C13F4B196CCA">
+            </eu-tree>
         </div>
+
+
         <div class="span9" id="rightPanel">
             <!--Body content-->
             <div>
