@@ -11,7 +11,7 @@ lib-cov
 .project
 
 
-master.*
+master
 pids
 logs
 results
