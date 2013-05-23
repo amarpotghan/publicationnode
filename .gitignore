@@ -10,6 +10,8 @@ lib-cov
 *.project
 .project
 
+
+master.*
 pids
 logs
 results
