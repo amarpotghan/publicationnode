@@ -1,20 +1,15 @@
-$/
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
 
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# for idea
-*.iml
-*.ipr
-*.iws
-.idea/
-out/
-master.*
-
-
-
-# for project
-/$
+pids
+logs
+results
+.idea
+npm-debug.log
+node_modules
