@@ -1,4 +1,4 @@
-var directoryService = require('../../lib/services/DirectoryToJson.js');
+var directoryService = require('../../lib/utils/DirectoryToJson.js');
 
 exports.before = function(req, res, next){
     next();
