@@ -60,7 +60,7 @@ app.use(function(req, res, next){
 });
 
 // load controllers
-require('./lib/config/boot')(app, { verbose: !module.parent });
+require('./lib/config/UrlDecoder')(app, { verbose: !module.parent });
 
 // assume "not found" in the error msgs
 // is a 404. this is somewhat silly, but
