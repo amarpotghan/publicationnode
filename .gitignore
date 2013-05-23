@@ -1,6 +1,5 @@
 $/
-# for java
-*.class
+
 
 # Package Files #
 *.jar
@@ -14,14 +13,8 @@ $/
 .idea/
 out/
 master.*
-Makefile.*
-# for gradle
-.gradle
-target/
-build/
 
-# for git
-.gitignore
+
 
 # for project
 /$
