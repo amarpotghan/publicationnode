@@ -9,5 +9,6 @@ exports.listone=function(req,res,next){
     jsonresponse=jsonDirectory.dirTree('./app');
     jsonresponse=[jsonresponse];
     res.send(jsonresponse);
+    return jsonresponse;
 };
 

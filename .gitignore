@@ -9,7 +9,9 @@ lib-cov
 *.iml
 *.project
 .project
-
+make.exe
+coverage
+log/*.log
 
 master
 pids
