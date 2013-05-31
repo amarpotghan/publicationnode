@@ -13,9 +13,7 @@ describe('Directory JSON test', function(){
 
 
     it ('should return contents of given file',function(done){
-               var json=new Object();
-               json=directory.listOne(null,null,null);
-        expect(json).to.exist;
+
         });
 
 });
