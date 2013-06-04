@@ -18,7 +18,7 @@ var argv = optimist
     .alias('help', 'h')
     .argv;
 
-var mocha = new Mocha({timeout: argv.timeout, reporter: argv.reporter, ui: 'bdd'});
+var mocha = new Mocha({timeout: argv.timeout, reporter: argv.reporter, ui: 'tdd'});
 
 var valid_test_types = ['unit', 'functional', 'acceptance', 'integration'];
 var requested_types = argv.types.split(',');

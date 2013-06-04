@@ -1,101 +1,98 @@
-var restify = require('restify');
-var host = process.env.HOST || 'localhost';
-var port = process.env.PORT;
+var EventEmitter = require('events').EventEmitter
+    , should = require('should')
+    , methods = ['get','post','put','delete','head']
+    , http = require('http')
 
-if (!port) {
-    if (host === 'localhost') {
-        port = '8080';
-    } else {
-        port = '80';
-    }
+    , server
+    , addr;
+
+exports.createServer = function(app,fn){
+    if(server){ return fn(); }
+
+    server = app;
+    server.listen(0, function(){
+        addr = server.address();
+        fn();
+    });
+
 }
 
-function TestServer(args) {
-    this.routes = args.routes;
-    this.server = restify.createServer();
-    this.server.use(restify.bodyParser());
-    this.server.use(restify.queryParser());
-    main.server.router.register_routes(this.server, this.routes);
+exports.request = function() {
+    return new Request();
 }
 
-TestServer.prototype.start = function () {
-    if (this.server) {
-        this.server.listen(port, host);
-    } else {
-        throw new Error('Server not found');
-    }
-};
-
-TestServer.prototype.stop = function () {
-    this.server.close();
-};
-
-function HttpClient(args) {
-    args = args || {};
-    if (!args.host) {
-        throw new Error('HTTP Client requires a host param');
-    }
-
-    this.host = args.host;
-    this.protocol = args.protocol || 'http';
-    this.port = args.port;
-    this.url = 'http://' + this.host + ':' + this.port;
-
-    if (args.type === 'string') {
-        this.client = restify.createStringClient({url: this.url});
-    } else {
-        this.client = restify.createJsonClient({url: this.url});
-    }
+function Request() {
+    var self = this;
+    this.data = [];
+    this.header = {};
 }
 
-HttpClient.prototype.get = function (path_or_options, cb) {
-    this.client.get(path_or_options, function (err, req, res, data) {
-        cb(err, data, res, req);
-    });
+/**
+ * Inherit from `EventEmitter.prototype`.
+ */
+
+Request.prototype.__proto__ = EventEmitter.prototype;
+
+methods.forEach(function(method){
+    Request.prototype[method] = function(path){
+        return this.request(method, path);
+    };
+});
+
+Request.prototype.set = function(field, val){
+    this.header[field] = val;
+    return this;
 };
 
-HttpClient.prototype.get_plain = function (path_or_options, cb) {
-    this.string_client.get(path_or_options, function (err, req, res, data) {
-        cb(err, data, res, req);
-    });
+Request.prototype.write = function(data){
+    this.data.push(data);
+    return this;
 };
 
-HttpClient.prototype.post = function (path_or_options, body, cb) {
-    this.client.post(path_or_options, body, function (err, req, res, data) {
-        cb(err, data, res, req);
-    });
+Request.prototype.request = function(method, path){
+    this.method = method;
+    this.path = path;
+    return this;
 };
 
-HttpClient.prototype.put = function (path_or_options, body, cb) {
-    this.client.put(path_or_options, body, function (err, req, res, data) {
-        cb(err, data, res, req);
-    });
-};
-
-HttpClient.prototype.del = function (path_or_options, cb) {
-    this.client.del(path_or_options, function (err, req, res, data) {
-        cb(err, data, res, req);
-    });
-};
-
-var http = {
-    string_client: function () {
-        return new HttpClient({host: host, port: port, type: 'string'});
-    },
-
-    client: function () {
-        return new HttpClient({host: host, port: port});
-    },
-
-    server: {
-        create: function (routes) {
-            return new TestServer({routes: routes});
+Request.prototype.expect = function(body, fn){
+    this.end(function(res){
+        if ('number' == typeof body) {
+            res.statusCode.should.equal(body);
+        } else if (body instanceof RegExp) {
+            res.body.should.match(body);
+        } else {
+            res.body.should.equal(body);
         }
-    },
-
-    host: host,
-    port: port
+        fn();
+    });
 };
 
-module.exports = http;
+Request.prototype.end = function(fn){
 
+    var req = http.request({
+        method: this.method
+        , port: addr.port
+        , host: addr.address
+        , path: this.path
+        , headers: this.header
+    });
+
+    this.data.forEach(function(chunk){
+        req.write(chunk);
+    });
+
+    req.on('response', function(res){
+        var buf = '';
+        res.setEncoding('utf8');
+        res.on('data', function(chunk){ buf += chunk });
+        res.on('end', function(){
+            res.body = buf;
+            fn(res);
+        });
+    });
+
+    req.end();
+
+    return this;
+};

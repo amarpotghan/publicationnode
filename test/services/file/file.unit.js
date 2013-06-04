@@ -1,24 +1,26 @@
 var assert = require('assert');
 var request = require('superagent');
 var expect = require('expect.js');
-var support = require('../../support');
 
 
-describe('File Service', function(){
-    it ('should return JSON object for given filepath',function(done){
-        request.get('http://localhost:5000/file.%2Fapp%2Fjs%2Fcontrollers%2FLoginController.js',function(res){
+
+suite('File Service', function() {
+    test('should return file contents for given filepath', function(done) {
+        request.get('http://localhost:5000/file.%2Fapp%2Fjs%2Fcontrollers%2FLoginController.js', function(res) {
             expect(res).to.exist;
-            console.log(res);
+            expect(res.body).not.to.be.empty();
+            expect(res).to.be.an('object');
             done();
         });
     });
-
-    /*it ('should return contents of given file',function(done){
-        request.get('http://localhost:5000/api/getFileData',function(res){
+    test('should return empty response', function(done) {
+        request.get('http://localhost:5000/file', function(res) {
             expect(res).to.exist;
-            console.log(res.body);
-            //expect(res.body).to.contain('Your Name');
+            expect(res.body).to.be.empty();
+            expect(res).to.be.an('object');
             done();
         });
-    });*/
+    });
 });
+
+    /*;*/

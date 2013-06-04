@@ -1,7 +1,8 @@
 BASE = .
 
 ISTANBUL = node_modules\.bin\istanbul
-TEST_COMMAND = NODE_ENV=test \node_modules\.bin\mocha
+TEST_COMMAND = @NODE_ENV=test \node_modules\.bin\mocha \ --ui tdd\
+    
 COVERAGE_OPTS = --lines 95 --statements 90 --branches 80 --functions 90
 
 main: lint test

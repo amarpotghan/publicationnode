@@ -16,8 +16,8 @@ myApp.controller("TreeController", ['$scope','TreeService','FileService', functi
    		
             if(data.type == 'file'){
                 fileContent = FileService.getFileData(data.path).query({path:data.path},function(fileContent){
-                    fileContent = fileContent;
-                    var tabService= new TabService($scope.panes.length,$scope.panes,data,fileContent);
+                    $scope.fileContent = fileContent;
+                    var tabService= new TabService($scope.panes.length,$scope.panes,data,$scope.fileContent);
                     tabService.addTab();
 
                 });
